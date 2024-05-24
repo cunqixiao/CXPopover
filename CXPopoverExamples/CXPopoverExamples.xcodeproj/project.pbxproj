@@ -15,6 +15,7 @@
 		C4204B492C00270F00E26389 /* CXPopoverInteractiveDismissalOnlyExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4204B482C00270F00E26389 /* CXPopoverInteractiveDismissalOnlyExample.swift */; };
 		C4204B4B2C00271B00E26389 /* CXPopoverInteractiveExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4204B4A2C00271B00E26389 /* CXPopoverInteractiveExample.swift */; };
 		C4204B502C01166100E26389 /* CXPopoverBasicContentViewExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4204B4F2C01166100E26389 /* CXPopoverBasicContentViewExample.swift */; };
+		C4204B522C013C4400E26389 /* CXAnchoredPopoverExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4204B512C013C4400E26389 /* CXAnchoredPopoverExample.swift */; };
 		C424530D2BFF976500EB3B20 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C424530C2BFF976500EB3B20 /* AppDelegate.swift */; };
 		C424530F2BFF976500EB3B20 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C424530E2BFF976500EB3B20 /* SceneDelegate.swift */; };
 		C42453162BFF976600EB3B20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C42453152BFF976600EB3B20 /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 		C4204B482C00270F00E26389 /* CXPopoverInteractiveDismissalOnlyExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CXPopoverInteractiveDismissalOnlyExample.swift; sourceTree = "<group>"; };
 		C4204B4A2C00271B00E26389 /* CXPopoverInteractiveExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CXPopoverInteractiveExample.swift; sourceTree = "<group>"; };
 		C4204B4F2C01166100E26389 /* CXPopoverBasicContentViewExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CXPopoverBasicContentViewExample.swift; sourceTree = "<group>"; };
+		C4204B512C013C4400E26389 /* CXAnchoredPopoverExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CXAnchoredPopoverExample.swift; sourceTree = "<group>"; };
 		C42453092BFF976500EB3B20 /* CXPopoverExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CXPopoverExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C424530C2BFF976500EB3B20 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C424530E2BFF976500EB3B20 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 				C4204B422BFFA16000E26389 /* CXPopoverPlaygroundExample.swift */,
 				C4204B4A2C00271B00E26389 /* CXPopoverInteractiveExample.swift */,
 				C4204B4F2C01166100E26389 /* CXPopoverBasicContentViewExample.swift */,
+				C4204B512C013C4400E26389 /* CXAnchoredPopoverExample.swift */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 				C4204B492C00270F00E26389 /* CXPopoverInteractiveDismissalOnlyExample.swift in Sources */,
 				C4204B452BFFA1C900E26389 /* CXPopoverExampleListViewController.swift in Sources */,
 				C4204B412BFF9FD500E26389 /* CXPopoverExample.swift in Sources */,
+				C4204B522C013C4400E26389 /* CXAnchoredPopoverExample.swift in Sources */,
 				C4204B432BFFA16000E26389 /* CXPopoverPlaygroundExample.swift in Sources */,
 				C4204B4B2C00271B00E26389 /* CXPopoverInteractiveExample.swift in Sources */,
 				C4204B502C01166100E26389 /* CXPopoverBasicContentViewExample.swift in Sources */,

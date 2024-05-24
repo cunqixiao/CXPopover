@@ -1,5 +1,5 @@
 //
-//  CXPopoverBasicContentViewExample.swift
+//  CXAnchoredPopoverExample.swift
 //  CXPopoverExamples
 //
 //  Created by Cunqi Xiao on 5/24/24.
@@ -9,26 +9,33 @@ import UIKit
 
 import CXPopover
 
-final class CXPopoverBasicContentViewExample: CXPopoverExample {
+final class CXAnchoredPopoverExample: CXPopoverExample {
     
-    // MARK: - Lifecycle
+    // MARK: - Override methods
     
     override func didTapMenuButton(sender: UIButton) {
-        let contentView = ContentView()
         
-        var popoverBehavior = CXPopoverBehavior.default
-        popoverBehavior.animationMetadata = .zoom()
-        popoverBehavior.animationMetadata.bounces = true
-        
-        let popover = CXPopoverController(contentView: contentView, behavior: popoverBehavior)
-        present(popover, animated: true)
+        sender.present(ContentView(), preferredEdge: .top)
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationItem.rightBarButtonItems = [UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAddButtonX)),
+                                              UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(didTapAddButtonY))]
+    }
+    
+    @objc func didTapAddButtonX() {
+        buttonXPosition.constant += 10
+    }
+    
+    @objc func didTapAddButtonY() {
+        buttonYPosition.constant += 10
+    }
 }
 
-// MARK: - Content View
+// MARK: - Popover Content
 
-extension CXPopoverBasicContentViewExample {
+extension CXAnchoredPopoverExample {
     class ContentView: UIView, CXPopoverContentViewRepresentable {
         
         // MARK: - Initializer
@@ -36,6 +43,7 @@ extension CXPopoverBasicContentViewExample {
         override init(frame: CGRect) {
             super.init(frame: frame)
             addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapToDismiss)))
+            backgroundColor = .systemBackground
         }
         
         required init?(coder: NSCoder) {

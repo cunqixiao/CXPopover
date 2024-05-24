@@ -10,7 +10,7 @@ import UIKit
 import CXPopover
 
 class CXPopoverInteractiveDismissalOnlyExample: CXPopoverExample {
-    override func didTapMenuButton() {
+    override func didTapMenuButton(sender: UIButton) {
         let content = PopoverContent()
         let popover = CXPopoverController(contentViewController: content, behavior: content.behavior)
         present(popover, animated: true)

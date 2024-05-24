@@ -9,6 +9,14 @@ import UIKit
 
 class CXPopoverExample: UIViewController {
     
+    lazy var buttonXPosition: NSLayoutConstraint = {
+        menuButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0)
+    }()
+    
+    lazy var buttonYPosition: NSLayoutConstraint = {
+        menuButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0)
+    }()
+    
     // MARK: - Private properties
     
     private lazy var menuButton: UIButton = {
@@ -16,9 +24,9 @@ class CXPopoverExample: UIViewController {
         configuration.title = "Popover"
         configuration.buttonSize = .medium
         
-        return UIButton(configuration: configuration, primaryAction: UIAction(handler: { [unowned self] _ in
-            didTapMenuButton()
-        }))
+        let button = UIButton(configuration: configuration)
+        button.addTarget(self, action: #selector(didTapMenuButton(sender:)), for: .touchUpInside)
+        return button
     }()
     
     // MARK: - Initializers
@@ -43,7 +51,7 @@ class CXPopoverExample: UIViewController {
     
     // MARK: - Internal methods
     
-    func didTapMenuButton() {
+    @objc func didTapMenuButton(sender: UIButton) {
         
     }
     
@@ -55,8 +63,9 @@ class CXPopoverExample: UIViewController {
         view.addSubview(menuButton)
         menuButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            menuButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            menuButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            buttonXPosition,
+            buttonYPosition,
+            menuButton.widthAnchor.constraint(equalToConstant: 20)
         ])
     }
     

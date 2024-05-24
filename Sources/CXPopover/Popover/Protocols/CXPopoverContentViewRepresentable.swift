@@ -20,6 +20,10 @@ public extension CXPopoverContentViewRepresentable {
 extension UIResponder {
     // https://stackoverflow.com/a/49714358/24016318
     var parentPopover: (any CXPopoverContentViewControllerRepresentable)? {
-        next as? CXPopoverContentViewControllerRepresentable ?? next?.parentPopover
+        parent(of: CXPopoverContentViewControllerRepresentable.self)
+    }
+    
+    func parent<Parent>(of: Parent.Type) -> Parent? {
+        next as? Parent ?? next?.parent(of: Parent.self)
     }
 }

@@ -17,6 +17,7 @@ class CXPopoverExampleListViewController: UITableViewController {
         case interactiveDismissalOnly
         case interactive
         case playground
+        case anchoredPopover
     }
     
     // MARK: - Lifecycle
@@ -74,6 +75,8 @@ extension CXPopoverExampleListViewController {
                 return CXPopoverInteractiveDismissalOnlyExample(title: example.title)
             case .interactive:
                 return CXPopoverInteractiveExample(title: example.title)
+            case .anchoredPopover:
+                return CXAnchoredPopoverExample(title: example.title)
             }
         }
     }
@@ -94,6 +97,8 @@ extension CXPopoverExampleListViewController.Example {
             return "Interactive popover only"
         case .interactive:
             return "Interactive popover"
+        case .anchoredPopover:
+            return "Anchored popover"
         }
     }
 }

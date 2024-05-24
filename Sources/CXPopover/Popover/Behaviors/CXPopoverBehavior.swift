@@ -28,6 +28,9 @@ public struct CXPopoverBehavior {
     public var maskedCorners: CACornerMask
     
     /// The background color of the `backgroundMask` view.
+    public var backgroundMaskColor: UIColor
+    
+    /// The background color of the popover view.
     public var backgroundColor: UIColor
 
     /// Controls whether the presentation is modal.
@@ -39,6 +42,7 @@ public struct CXPopoverBehavior {
     
     /// Controls whether the interactive animation is enabled.
     public var interactiveAnimationMode: InteractiveAnimationMode
+    
 }
 
 // MARK: - Predefined behaviors
@@ -50,7 +54,8 @@ public extension CXPopoverBehavior {
         enableSmartCorner: true,
         cornerRadius: 16.0,
         maskedCorners: [.layerMaxXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner],
-        backgroundColor: .black.withAlphaComponent(0.5),
+        backgroundMaskColor: .black.withAlphaComponent(0.5),
+        backgroundColor: .systemBackground,
         isModal: false,
         animationMetadata: .fade(),
         interactiveAnimationMode: .none)
@@ -59,16 +64,16 @@ public extension CXPopoverBehavior {
 // MARK: - Anchor
 
 public extension CXPopoverBehavior {
-    enum Anchor: CaseIterable {
-        case top
-        case bottom
-        case leading
-        case trailing
-        case topLeading
-        case topTrailing
-        case bottomLeading
-        case bottomTrailing
+    enum Anchor {
+        case top, bottom, leading, trailing
+        
+        case topLeading, topTrailing
+        
+        case bottomLeading, bottomTrailing
+        
         case center
+        
+        case anchor(frame: CGRect, insets: UIEdgeInsets, preferredEdge: UIRectEdge)
     }
 }
 

@@ -13,7 +13,7 @@ public class CXPopoverController: UIViewController {
     // MARK: - Public properties
     
     public let interactiveCoordinator: CXPopoverInteractiveCoordinator
-    public let behavior: CXPopoverBehavior
+    public internal(set) var behavior: CXPopoverBehavior
     
     // MARK: - Private properties
     
@@ -93,7 +93,7 @@ public class CXPopoverController: UIViewController {
     }
     
     private func stylize() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = behavior.backgroundColor
         CXPopoverHelper.stylizePopover(view, behavior: behavior)
     }
 }
