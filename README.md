@@ -2,7 +2,8 @@
 
 ## Summary
 
-CXPopover is a simple popover control written in Swift. It is lightweight and easy to use. It is highly customizable and supports animations.
+CXPopover is a simple popover control written in Swift. It is lightweight and easy to use. It is highly customizable and supports animations. the popover is 
+the foundation of presenting anything you want in a popover style. it is easy to intergate your own content with the popover.
 
 ## Features
 
