@@ -122,10 +122,3 @@ extension CXPopoverController: UIViewControllerTransitioningDelegate {
         interactiveCoordinator.interactiveAnimatorForPresentation()
     }
 }
-
-// MARK: - UIViewController extensions
-
-public extension UIViewController {
-    func prepareInteractivePopoverPresentation(of popover: CXPopoverController) {
-    }
-}
