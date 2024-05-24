@@ -15,7 +15,7 @@ final class CXPopoverInteractiveExample: CXPopoverExample {
     
     private lazy var popover: CXPopoverController = {
         let content = PopoverContent()
-        return CXPopoverController(content: content, popoverBehavior: content.behavior)
+        return CXPopoverController(contentViewController: content, popoverBehavior: content.behavior)
     }()
     
     // MARK: - Lifecycle
@@ -30,7 +30,7 @@ final class CXPopoverInteractiveExample: CXPopoverExample {
 // MARK: - PopoverContent
 
 extension CXPopoverInteractiveExample {
-    class PopoverContent: UIViewController, CXPopoverLayoutProvider {
+    class PopoverContent: UIViewController, CXPopoverContentViewControllerRepresentable {
         let behavior: CXPopoverBehavior = {
             var metadata = CXPopoverAnimationMetadata.slide(moveIn: .right, moveOut: .right)
             

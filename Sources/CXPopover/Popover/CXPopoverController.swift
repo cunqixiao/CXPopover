@@ -8,27 +8,31 @@
 import UIKit
 
 public class CXPopoverController: UIViewController {
-    public typealias PopoverContent = UIViewController & CXPopoverLayoutProvider
     public typealias OnComplete = () -> Void
     
     // MARK: - Public properties
     
     public let interactiveCoordinator: CXPopoverInteractiveCoordinator
     public let popoverBehavior: CXPopoverBehavior
-    public let content: PopoverContent?
     
     // MARK: - Private properties
+    
+    private let contentViewController: (any CXPopoverContentViewControllerRepresentable)?
     
     private lazy var layoutProvider = DefaultLayoutProvider()
     
     // MARK: - Initializers
     
     public convenience init(popoverBehavior: CXPopoverBehavior = .default) {
-        self.init(content: nil, popoverBehavior: popoverBehavior)
+        self.init(contentViewController: nil, popoverBehavior: popoverBehavior)
     }
     
-    public init(content: PopoverContent?, popoverBehavior: CXPopoverBehavior = .default) {
-        self.content = content
+    public convenience init(contentView: any CXPopoverContentViewRepresentable, popoverBehavior: CXPopoverBehavior = .default) {
+        self.init(contentViewController: PopoverContentViewWrapper(contentView: contentView), popoverBehavior: popoverBehavior)
+    }
+    
+    public init(contentViewController: (any CXPopoverContentViewControllerRepresentable)?, popoverBehavior: CXPopoverBehavior = .default) {
+        self.contentViewController = contentViewController
         self.popoverBehavior = popoverBehavior
         self.interactiveCoordinator = CXPopoverInteractiveCoordinator(behavior: popoverBehavior)
         
@@ -64,28 +68,28 @@ public class CXPopoverController: UIViewController {
                 safeAreaInsets: safeAreaInsets,
                 anchor: popoverBehavior.anchor,
                 ignoreSafeArea: false,
-                layoutProvider: content ?? layoutProvider)
+                layoutProvider: contentViewController ?? layoutProvider)
         }
     }
     
     // MARK: - Private methods
     
     private func setupContentIfNeeded() {
-        guard let content else {
+        guard let contentViewController else {
             return
         }
-        addChild(content)
-        view.addSubview(content.view)
-        content.view.translatesAutoresizingMaskIntoConstraints = false
+        addChild(contentViewController)
+        view.addSubview(contentViewController.view)
+        contentViewController.view.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            content.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            content.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            content.view.topAnchor.constraint(equalTo: view.topAnchor),
-            content.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            contentViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            contentViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
-        content.didMove(toParent: self)
+        contentViewController.didMove(toParent: self)
     }
     
     private func stylize() {
@@ -97,13 +101,13 @@ public class CXPopoverController: UIViewController {
 // MARK: - UIViewControllerTransitioningDelegate
 
 extension CXPopoverController: UIViewControllerTransitioningDelegate {
-    public func presentationController(forPresented presented: UIViewController, 
+    public func presentationController(forPresented presented: UIViewController,
                                        presenting: UIViewController?,
                                        source: UIViewController) -> UIPresentationController? {
         CXPopoverPresentationController(presented: presented,
                                         presenting: presenting,
                                         behavior: popoverBehavior,
-                                        layoutProvider: content ?? layoutProvider)
+                                        layoutProvider: contentViewController ?? layoutProvider)
     }
     
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> (any UIViewControllerAnimatedTransitioning)? {
@@ -120,5 +124,35 @@ extension CXPopoverController: UIViewControllerTransitioningDelegate {
     
     public func interactionControllerForPresentation(using animator: any UIViewControllerAnimatedTransitioning) -> (any UIViewControllerInteractiveTransitioning)? {
         interactiveCoordinator.interactiveAnimatorForPresentation()
+    }
+}
+
+// MARK: - PopoverContentViewWrapper
+
+extension CXPopoverController {
+    final class PopoverContentViewWrapper: UIViewController, CXPopoverContentViewControllerRepresentable {
+        
+        // MARK: - Private properties
+        
+        private let contentView: any CXPopoverContentViewRepresentable
+        
+        // MARK: - Initializer
+        
+        init(contentView: any CXPopoverContentViewRepresentable) {
+            self.contentView = contentView
+            super.init(nibName: nil, bundle: nil)
+        }
+        
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
+        override func loadView() {
+            self.view = contentView
+        }
+        
+        func popover(sizeForPopover containerSize: CGSize, safeAreaInsets: UIEdgeInsets) -> CGSize {
+            contentView.popover(sizeForPopover: containerSize, safeAreaInsets: safeAreaInsets)
+        }
     }
 }
