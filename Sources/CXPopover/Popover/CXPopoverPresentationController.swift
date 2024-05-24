@@ -15,19 +15,18 @@ final class CXPopoverPresentationController: UIPresentationController {
         guard let containerView else {
             return .zero
         }
-        let contentSize = layoutProvider?.popover(sizeForPopover: containerView.frame.size, safeAreaInsets: containerView.safeAreaInsets) ?? .zero
-        let insets: UIEdgeInsets = behavior.ignoreSafeArea ? .zero : containerView.safeAreaInsets
-        let origin = CXPopoverHelper.makeOrigin(
+        
+        return CXPopoverHelper.makePopoverFrame(
             containerSize: containerView.frame.size,
-            contentSize: contentSize,
-            insets: insets,
-            anchor: behavior.anchor)
-        return CGRect(origin: origin, size: contentSize)
+            safeAreaInsets: containerView.safeAreaInsets,
+            anchor: popoverBehavior.anchor,
+            ignoreSafeArea: popoverBehavior.ignoreSafeArea,
+            layoutProvider: layoutProvider)
     }
     
     // MARK: - Private properties
     
-    private let behavior: CXPopoverBehavior
+    private let popoverBehavior: CXPopoverBehavior
     private weak var layoutProvider: (any CXPopoverLayoutProvider)?
     
     private var coordinator: (any UIViewControllerTransitionCoordinator)? {
@@ -37,7 +36,7 @@ final class CXPopoverPresentationController: UIPresentationController {
     private lazy var backgroundMask: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = behavior.backgroundColor
+        view.backgroundColor = popoverBehavior.backgroundColor
         view.alpha = 0
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapBackgroundMask)))
         return view
@@ -46,7 +45,7 @@ final class CXPopoverPresentationController: UIPresentationController {
     // MARK: - Initializer
     
     init(presented: UIViewController, presenting: UIViewController?, behavior: CXPopoverBehavior, layoutProvider: any CXPopoverLayoutProvider) {
-        self.behavior = behavior
+        self.popoverBehavior = behavior
         self.layoutProvider = layoutProvider
         super.init(presentedViewController: presented, presenting: presenting)
     }
@@ -88,7 +87,7 @@ final class CXPopoverPresentationController: UIPresentationController {
     // MARK: - Private methods
     
     @objc private func didTapBackgroundMask() {
-        guard !behavior.isModal else { 
+        guard !popoverBehavior.isModal else { 
             return
         }
         presentedViewController.dismiss(animated: true)

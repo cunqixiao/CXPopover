@@ -11,6 +11,22 @@ class CXPopoverHelper {
     
     // MARK: - Static internal methods
     
+    static func makePopoverFrame(containerSize: CGSize, 
+                                 safeAreaInsets: UIEdgeInsets,
+                                 anchor: CXPopoverBehavior.Anchor,
+                                 ignoreSafeArea: Bool,
+                                 layoutProvider: (any CXPopoverLayoutProvider)?) -> CGRect {
+        let insets = ignoreSafeArea ? .zero : safeAreaInsets
+        let contentSize = layoutProvider?.popover(sizeForPopover: containerSize, safeAreaInsets: safeAreaInsets) ?? .zero
+        let origin = CXPopoverHelper.makeOrigin(
+            containerSize: containerSize,
+            contentSize: contentSize,
+            insets: insets,
+            anchor: anchor)
+        
+        return CGRect(origin: origin, size: contentSize)
+    }
+    
     static func makeOrigin(containerSize: CGSize, contentSize: CGSize, insets: UIEdgeInsets, anchor: CXPopoverBehavior.Anchor) -> CGPoint {
         let width = containerSize.width
         let height = containerSize.height

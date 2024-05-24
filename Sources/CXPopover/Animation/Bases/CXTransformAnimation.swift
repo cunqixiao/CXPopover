@@ -13,11 +13,7 @@ class CXTransformAnimation: CXBasePopoverAnimation {
         super.setup(context: context, from: fromVC, to: toVC)
         if isPresenting {
             let transform = setupTransform(frame: context.finalFrame(for: toVC))
-            print("Transform: \(toVC.view.transform) Before toVC: \(toVC.view.frame)")
-            toVC.view.transform = .identity
-            print("Transform: \(toVC.view.transform) Mid toVC: \(toVC.view.frame)")
             toVC.view.transform = transform
-            print("Transform: \(toVC.view.transform) After toVC: \(toVC.view.frame)")
         } else {
             fromVC.view.transform = setupTransform(frame: context.finalFrame(for: fromVC))
         }
@@ -28,10 +24,7 @@ class CXTransformAnimation: CXBasePopoverAnimation {
             toVC.view.transform = updateTransform(frame: context.finalFrame(for: toVC))
         } else {
             let transform = updateTransform(frame: context.finalFrame(for: fromVC))
-            
-            print("Dismiss Transform: \(fromVC.view.transform) Before fromVC: \(fromVC.view.frame)")
             fromVC.view.transform = transform
-            print("Dismiss Transform: \(fromVC.view.transform) After fromVC: \(fromVC.view.frame)")
         }
     }
     
