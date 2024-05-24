@@ -11,11 +11,11 @@ class CXSlideAnimation: CXTransformAnimation {
     
     // MARK: - Public properties
     
-    public let edge: CXAnimationMetadata.Edge
+    public let edge: CXPopoverAnimationMetadata.Edge
     
     // MARK: - Initializer
     
-    public init(edge: CXAnimationMetadata.Edge,
+    public init(edge: CXPopoverAnimationMetadata.Edge,
                 duration: TimeInterval,
                 options: UIView.AnimationOptions,
                 isPresenting: Bool) {
@@ -39,7 +39,7 @@ class CXSlideAnimation: CXTransformAnimation {
     
     // MARK: - Private methods
     
-    private func decodeTransform(edge: CXAnimationMetadata.Edge, frame: CGRect) -> CGAffineTransform {
+    private func decodeTransform(edge: CXPopoverAnimationMetadata.Edge, frame: CGRect) -> CGAffineTransform {
         switch edge {
         case .top:
             return CGAffineTransform(translationX: 0, y: -frame.maxY)

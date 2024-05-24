@@ -32,8 +32,7 @@ final class CXPopoverInteractiveExample: CXPopoverExample {
 extension CXPopoverInteractiveExample {
     class PopoverContent: UIViewController, CXPopoverLayoutProvider {
         let behavior: CXPopoverBehavior = {
-            var metadata = CXAnimationMetadata.slide(moveIn: .right, moveOut: .right)
-            metadata.isInteractiveAnimationDisabled = false
+            var metadata = CXPopoverAnimationMetadata.slide(moveIn: .right, moveOut: .right)
             
             var behavior = CXPopoverBehavior.default
             behavior.anchor = .trailing

@@ -9,16 +9,13 @@ import UIKit
 
 // MARK: - Animation
 
-public struct CXAnimationMetadata {
+public struct CXPopoverAnimationMetadata {
     
     // MARK: - Constants
     
     public static let defaultDuration = 0.25
     
     // MARK: - Public Properties
-    
-    /// Controls whether the interactive dismiss is enabled.
-    public var isInteractiveAnimationDisabled: Bool
     
     public var duration: TimeInterval
     
@@ -35,14 +32,14 @@ public struct CXAnimationMetadata {
     
     var effect: AnimationEffect
     
-    var moveIn: CXAnimationMetadata.Edge
+    var moveIn: CXPopoverAnimationMetadata.Edge
     
-    var moveOut: CXAnimationMetadata.Edge
+    var moveOut: CXPopoverAnimationMetadata.Edge
 }
 
 // MARK: - Edge
 
-public extension CXAnimationMetadata {
+public extension CXPopoverAnimationMetadata {
     enum Edge {
         case top, bottom, left, right, center
     }
@@ -50,21 +47,21 @@ public extension CXAnimationMetadata {
 
 // MARK: - Effects
 
-extension CXAnimationMetadata {
+extension CXPopoverAnimationMetadata {
     enum AnimationEffect {
         case fade
         case zoom
         case slide
-        case complex(animations: [CXAnimationMetadata])
+        case complex(animations: [CXPopoverAnimationMetadata])
         case custom(animation: any CXPopoverCustomAnimator)
     }
 }
 
 // MARK: - Convenient maker
 
-public extension CXAnimationMetadata {
-    static func fade(duration: TimeInterval = Self.defaultDuration, options: UIView.AnimationOptions = .curveEaseInOut) -> CXAnimationMetadata {
-        var metadata = CXAnimationMetadata.default
+public extension CXPopoverAnimationMetadata {
+    static func fade(duration: TimeInterval = Self.defaultDuration, options: UIView.AnimationOptions = .curveEaseInOut) -> CXPopoverAnimationMetadata {
+        var metadata = CXPopoverAnimationMetadata.default
         metadata.effect = .fade
         metadata.duration = duration
         metadata.options = options
@@ -74,8 +71,8 @@ public extension CXAnimationMetadata {
     static func slide(duration: TimeInterval = Self.defaultDuration,
                       options: UIView.AnimationOptions = .curveEaseInOut,
                       moveIn: Edge,
-                      moveOut: Edge) -> CXAnimationMetadata {
-        var metadata = CXAnimationMetadata.default
+                      moveOut: Edge) -> CXPopoverAnimationMetadata {
+        var metadata = CXPopoverAnimationMetadata.default
         metadata.effect = .slide
         metadata.duration = duration
         metadata.options = options
@@ -84,26 +81,26 @@ public extension CXAnimationMetadata {
         return metadata
     }
     
-    static func zoom(duration: TimeInterval = Self.defaultDuration, options: UIView.AnimationOptions = .curveEaseInOut) -> CXAnimationMetadata {
-        var metadata = CXAnimationMetadata.default
+    static func zoom(duration: TimeInterval = Self.defaultDuration, options: UIView.AnimationOptions = .curveEaseInOut) -> CXPopoverAnimationMetadata {
+        var metadata = CXPopoverAnimationMetadata.default
         metadata.effect = .zoom
         metadata.duration = duration
         metadata.options = options
         return metadata
     }
     
-    static func custom(animation: any CXPopoverCustomAnimator) -> CXAnimationMetadata {
-        var metadata = CXAnimationMetadata.default
+    static func custom(animation: any CXPopoverCustomAnimator) -> CXPopoverAnimationMetadata {
+        var metadata = CXPopoverAnimationMetadata.default
         metadata.effect = .custom(animation: animation)
         return metadata
     }
     
     /// `animations` orders matters, `zoom` will update the transform to `identity`,
     /// Make sure the `transform` has been setup correctly.
-    static func complex(animations: [CXAnimationMetadata],
+    static func complex(animations: [CXPopoverAnimationMetadata],
                         duration: TimeInterval = Self.defaultDuration,
-                        options: UIView.AnimationOptions = .curveEaseInOut) -> CXAnimationMetadata {
-        var metadata = CXAnimationMetadata.default
+                        options: UIView.AnimationOptions = .curveEaseInOut) -> CXPopoverAnimationMetadata {
+        var metadata = CXPopoverAnimationMetadata.default
         let filteredAnimations = animations.filter { animation in
             switch animation.effect {
             case .fade, .zoom, .slide:
@@ -118,8 +115,7 @@ public extension CXAnimationMetadata {
         return metadata
     }
     
-    private static let `default` = CXAnimationMetadata(
-        isInteractiveAnimationDisabled: true,
+    private static let `default` = CXPopoverAnimationMetadata(
         duration: Self.defaultDuration,
         options: [.curveEaseInOut],
         bounces: false,

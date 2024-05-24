@@ -22,7 +22,7 @@ class CXPopoverInteractiveDismissalOnlyExample: CXPopoverExample {
 extension CXPopoverInteractiveDismissalOnlyExample {
     class PopoverContent: UIViewController, CXPopoverLayoutProvider {
         let behavior: CXPopoverBehavior = {
-            var metadata = CXAnimationMetadata.slide(moveIn: .top, moveOut: .top)
+            var metadata = CXPopoverAnimationMetadata.slide(moveIn: .top, moveOut: .top)
             
             var behavior = CXPopoverBehavior.default
             behavior.anchor = .top

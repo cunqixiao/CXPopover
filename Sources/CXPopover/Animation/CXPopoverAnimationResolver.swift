@@ -11,7 +11,7 @@ final class CXPopoverAnimationResolver {
     
     // MARK: - Internal methods
     
-    static func resolveAnimator(metadata: CXAnimationMetadata, isPresenting: Bool) -> any UIViewControllerAnimatedTransitioning {
+    static func resolveAnimator(metadata: CXPopoverAnimationMetadata, isPresenting: Bool) -> any UIViewControllerAnimatedTransitioning {
         switch metadata.effect {
         case .custom(let animation):
             animation.isPresenting = isPresenting
@@ -24,7 +24,7 @@ final class CXPopoverAnimationResolver {
     
     // MARK: - Private methods
     
-    private static func resolveAnimation(metadata: CXAnimationMetadata, isPresenting: Bool) -> any CXPopoverAnimationCoordinator {
+    private static func resolveAnimation(metadata: CXPopoverAnimationMetadata, isPresenting: Bool) -> any CXPopoverAnimationCoordinator {
         switch metadata.effect {
         case .fade:
             return resolveFadeAnimation(metadata: metadata, isPresenting: isPresenting)
@@ -40,15 +40,15 @@ final class CXPopoverAnimationResolver {
         }
     }
     
-    private static func resolveFadeAnimation(metadata: CXAnimationMetadata, isPresenting: Bool) -> any CXPopoverAnimationCoordinator {
+    private static func resolveFadeAnimation(metadata: CXPopoverAnimationMetadata, isPresenting: Bool) -> any CXPopoverAnimationCoordinator {
         CXFadeAnimation(duration: metadata.duration, options: metadata.options, isPresenting: isPresenting)
     }
     
-    private static func resolveZoomAnimation(metadata: CXAnimationMetadata, isPresenting: Bool) -> any CXPopoverAnimationCoordinator {
+    private static func resolveZoomAnimation(metadata: CXPopoverAnimationMetadata, isPresenting: Bool) -> any CXPopoverAnimationCoordinator {
         CXZoomAnimation(duration: metadata.duration, options: metadata.options, isPresenting: isPresenting)
     }
     
-    private static func resolveSlideAnimation(metadata: CXAnimationMetadata, isPresenting: Bool) -> any CXPopoverAnimationCoordinator {
+    private static func resolveSlideAnimation(metadata: CXPopoverAnimationMetadata, isPresenting: Bool) -> any CXPopoverAnimationCoordinator {
         CXSlideAnimation(
             edge: isPresenting ? metadata.moveIn : metadata.moveOut,
             duration: metadata.duration,
@@ -56,15 +56,15 @@ final class CXPopoverAnimationResolver {
             isPresenting: isPresenting)
     }
     
-    private static func resolveComplexAnimation(_ animations: [CXAnimationMetadata],
-                                                metadata: CXAnimationMetadata,
+    private static func resolveComplexAnimation(_ animations: [CXPopoverAnimationMetadata],
+                                                metadata: CXPopoverAnimationMetadata,
                                                 isPresenting: Bool) -> any CXPopoverAnimationCoordinator {
         let popoverAnimations = animations.map { Self.resolveAnimation(metadata: $0, isPresenting: isPresenting) }
         return CXComplexPopoverAnimation(animations: popoverAnimations, duration: metadata.duration, options: metadata.options, isPresenting: isPresenting)
     }
     
     private static func sealWithAnimator(_ animation: any CXPopoverAnimationCoordinator,
-                                         metadata: CXAnimationMetadata) -> any UIViewControllerAnimatedTransitioning {
+                                         metadata: CXPopoverAnimationMetadata) -> any UIViewControllerAnimatedTransitioning {
         metadata.bounces ? CXBounceAnimator(
             animation: animation,
             damping: metadata.damping,

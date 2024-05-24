@@ -17,7 +17,7 @@ class CXPopoverBaseInteractiveTransition: CXPopoverInteractiveTransition {
     
     // MARK: - Internal properties
     
-    let edge: CXAnimationMetadata.Edge
+    let edge: CXPopoverAnimationMetadata.Edge
     
     weak var presentingViewController: UIViewController?
     
@@ -25,7 +25,7 @@ class CXPopoverBaseInteractiveTransition: CXPopoverInteractiveTransition {
     
     // MARK: - Initializer
     
-    init(edge: CXAnimationMetadata.Edge) {
+    init(edge: CXPopoverAnimationMetadata.Edge) {
         self.edge = edge
     }
     

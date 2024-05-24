@@ -35,7 +35,7 @@ public struct CXPopoverBehavior {
     public var isModal: Bool
     
     /// Defines the animation metadata (duration, option, bounces etc.) for the presentation.
-    public var animationMetadata: CXAnimationMetadata
+    public var animationMetadata: CXPopoverAnimationMetadata
     
     /// Controls whether the interactive animation is enabled.
     public var interactiveAnimationMode: InteractiveAnimationMode

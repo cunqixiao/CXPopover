@@ -81,7 +81,7 @@ public class CXPopoverInteractiveCoordinator {
     
     // MARK: - Private methods
     
-    private static func isAnimationEffectSupportInteracting(effect: CXAnimationMetadata.AnimationEffect) -> Bool {
+    private static func isAnimationEffectSupportInteracting(effect: CXPopoverAnimationMetadata.AnimationEffect) -> Bool {
         switch effect {
         case .slide:
             return true
@@ -98,7 +98,7 @@ extension CXPopoverInteractiveCoordinator {
         
         // MARK: - Initializer
         
-        init(presented: UIViewController, edge: CXAnimationMetadata.Edge) {
+        init(presented: UIViewController, edge: CXPopoverAnimationMetadata.Edge) {
             super.init(edge: edge)
             self.presentedViewController = presented
         }
@@ -159,7 +159,7 @@ extension CXPopoverInteractiveCoordinator {
         
         // MARK: - Initializer
         
-        init(presenting: UIViewController, presented: UIViewController, edge: CXAnimationMetadata.Edge) {
+        init(presenting: UIViewController, presented: UIViewController, edge: CXPopoverAnimationMetadata.Edge) {
             super.init(edge: edge)
             self.presentingViewController = presenting
             self.presentedViewController = presented
