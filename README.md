@@ -23,7 +23,7 @@ dependencies: [
 
 ### CocoaPods
 
-** TBD **
+**TBD**
 
 ## Usage
 
@@ -42,7 +42,7 @@ dependencies: [
 
 ### Other usages
 
-TBD
+**TBD**
 
 ## License
 
