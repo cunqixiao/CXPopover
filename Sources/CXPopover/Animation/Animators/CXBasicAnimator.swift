@@ -37,9 +37,11 @@ public class CXBasicAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             animation.cleanup(context: transitionContext, from: fromVC, to: toVC)
         }
         
-        UIView.animate(withDuration: animation.duration) { [unowned self] in
+        UIView.animate(
+            withDuration: animation.duration,
+            delay: .zero,
+            options: animation.options) { [unowned self] in
             animation.update(context: transitionContext, from: fromVC, to: toVC)
-            
         } completion: { _ in
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
             onComplete()

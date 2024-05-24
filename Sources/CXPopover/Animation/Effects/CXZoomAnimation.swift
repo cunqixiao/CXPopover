@@ -19,6 +19,6 @@ class CXZoomAnimation: CXTransformAnimation {
         if isPresenting {
             return .identity
         }
-        return CGAffineTransform(scaleX: 0.1, y: 0.1)
+        return CGAffineTransform(scaleX: 0.01, y: 0.01)
     }
 }

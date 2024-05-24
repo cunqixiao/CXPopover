@@ -119,8 +119,8 @@ public extension CXPopoverAnimationMetadata {
         duration: Self.defaultDuration,
         options: [.curveEaseInOut],
         bounces: false,
-        damping: 0.8,
-        velocity: 0.6,
+        damping: 0.7,
+        velocity: 0.5,
         effect: .fade,
         moveIn: .bottom,
         moveOut: .bottom)

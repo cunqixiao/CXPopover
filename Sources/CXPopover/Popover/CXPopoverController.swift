@@ -13,7 +13,7 @@ public class CXPopoverController: UIViewController {
     // MARK: - Public properties
     
     public let interactiveCoordinator: CXPopoverInteractiveCoordinator
-    public let popoverBehavior: CXPopoverBehavior
+    public let behavior: CXPopoverBehavior
     
     // MARK: - Private properties
     
@@ -23,18 +23,18 @@ public class CXPopoverController: UIViewController {
     
     // MARK: - Initializers
     
-    public convenience init(popoverBehavior: CXPopoverBehavior = .default) {
-        self.init(contentViewController: nil, popoverBehavior: popoverBehavior)
+    public convenience init(behavior: CXPopoverBehavior = .default) {
+        self.init(contentViewController: nil, behavior: behavior)
     }
     
-    public convenience init(contentView: any CXPopoverContentViewRepresentable, popoverBehavior: CXPopoverBehavior = .default) {
-        self.init(contentViewController: PopoverContentViewWrapper(contentView: contentView), popoverBehavior: popoverBehavior)
+    public convenience init(contentView: any CXPopoverContentViewRepresentable, behavior: CXPopoverBehavior = .default) {
+        self.init(contentViewController: PopoverContentViewWrapper(contentView: contentView), behavior: behavior)
     }
     
-    public init(contentViewController: (any CXPopoverContentViewControllerRepresentable)?, popoverBehavior: CXPopoverBehavior = .default) {
+    public init(contentViewController: (any CXPopoverContentViewControllerRepresentable)?, behavior: CXPopoverBehavior = .default) {
         self.contentViewController = contentViewController
-        self.popoverBehavior = popoverBehavior
-        self.interactiveCoordinator = CXPopoverInteractiveCoordinator(behavior: popoverBehavior)
+        self.behavior = behavior
+        self.interactiveCoordinator = CXPopoverInteractiveCoordinator(behavior: behavior)
         
         super.init(nibName: nil, bundle: nil)
         
@@ -66,7 +66,7 @@ public class CXPopoverController: UIViewController {
             view.frame = CXPopoverHelper.makePopoverFrame(
                 containerSize: size,
                 safeAreaInsets: safeAreaInsets,
-                anchor: popoverBehavior.anchor,
+                anchor: behavior.anchor,
                 ignoreSafeArea: false,
                 layoutProvider: contentViewController ?? layoutProvider)
         }
@@ -94,7 +94,7 @@ public class CXPopoverController: UIViewController {
     
     private func stylize() {
         view.backgroundColor = .systemBackground
-        CXPopoverHelper.stylizePopover(view, behavior: popoverBehavior)
+        CXPopoverHelper.stylizePopover(view, behavior: behavior)
     }
 }
 
@@ -106,16 +106,16 @@ extension CXPopoverController: UIViewControllerTransitioningDelegate {
                                        source: UIViewController) -> UIPresentationController? {
         CXPopoverPresentationController(presented: presented,
                                         presenting: presenting,
-                                        behavior: popoverBehavior,
+                                        behavior: behavior,
                                         layoutProvider: contentViewController ?? layoutProvider)
     }
     
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> (any UIViewControllerAnimatedTransitioning)? {
-        CXPopoverAnimationResolver.resolveAnimator(metadata: popoverBehavior.animationMetadata, isPresenting: true)
+        CXPopoverAnimationResolver.resolveAnimator(metadata: behavior.animationMetadata, isPresenting: true)
     }
     
     public func animationController(forDismissed dismissed: UIViewController) -> (any UIViewControllerAnimatedTransitioning)? {
-        CXPopoverAnimationResolver.resolveAnimator(metadata: popoverBehavior.animationMetadata, isPresenting: false)
+        CXPopoverAnimationResolver.resolveAnimator(metadata: behavior.animationMetadata, isPresenting: false)
     }
     
     public func interactionControllerForDismissal(using animator: any UIViewControllerAnimatedTransitioning) -> (any UIViewControllerInteractiveTransitioning)? {

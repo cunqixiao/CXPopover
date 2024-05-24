@@ -37,7 +37,7 @@ public class CXPopoverInteractiveCoordinator {
             return
         }
         
-        let edge = popoverController.popoverBehavior.animationMetadata.moveIn
+        let edge = popoverController.behavior.animationMetadata.moveIn
         let presentationTransition = PresentationTransition(
             presenting: presentingViewController,
             presented: popoverController,
@@ -56,7 +56,7 @@ public class CXPopoverInteractiveCoordinator {
             return
         }
         
-        let edge = popoverController.popoverBehavior.animationMetadata.moveOut
+        let edge = popoverController.behavior.animationMetadata.moveOut
         let dismissalTransition = DismissalTransition(presented: popoverController, edge: edge)
         dismissalTransition.prepare()
         

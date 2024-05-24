@@ -13,6 +13,8 @@ public protocol CXPopoverAnimationCoordinator: AnyObject {
     
     var duration: TimeInterval { get }
     
+    var options: UIView.AnimationOptions { get }
+    
     var isPresenting: Bool { get }
     
     // MARK: - Methods

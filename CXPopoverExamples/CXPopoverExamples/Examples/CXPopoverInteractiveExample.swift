@@ -15,7 +15,7 @@ final class CXPopoverInteractiveExample: CXPopoverExample {
     
     private lazy var popover: CXPopoverController = {
         let content = PopoverContent()
-        return CXPopoverController(contentViewController: content, popoverBehavior: content.behavior)
+        return CXPopoverController(contentViewController: content, behavior: content.behavior)
     }()
     
     // MARK: - Lifecycle
