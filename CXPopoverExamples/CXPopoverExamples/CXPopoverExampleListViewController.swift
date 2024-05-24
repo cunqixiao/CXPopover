@@ -13,6 +13,7 @@ class CXPopoverExampleListViewController: UITableViewController {
     
     enum Example: Int, CaseIterable {
         case basic
+        case interactiveDismissalOnly
         case interactive
         case playground
     }
@@ -66,6 +67,8 @@ extension CXPopoverExampleListViewController {
                 return CXPopoverBasicExample(title: example.title)
             case .playground:
                 return CXPopoverBasicExample(title: example.title)
+            case .interactiveDismissalOnly:
+                return CXPopoverInteractiveDismissalOnlyExample(title: example.title)
             case .interactive:
                 return CXPopoverInteractiveExample(title: example.title)
             }
@@ -82,6 +85,8 @@ extension CXPopoverExampleListViewController.Example {
             return "Basic popover"
         case .playground:
             return "Popover playground"
+        case .interactiveDismissalOnly:
+            return "Interactive popover only"
         case .interactive:
             return "Interactive popover"
         }

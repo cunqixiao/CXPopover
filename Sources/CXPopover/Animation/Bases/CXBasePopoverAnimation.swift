@@ -36,6 +36,9 @@ class CXBasePopoverAnimation: CXPopoverAnimationCoordinator {
         fatalError("update(context:from:to:) has not been implemented")
     }
     
+    public func cleanup(context: any UIViewControllerContextTransitioning, from fromVC: UIViewController, to toVC: UIViewController) {
+    }
+    
     public final func combine(with animation: CXBasePopoverAnimation) -> CXBasePopoverAnimation {
         return CXComplexPopoverAnimation(
             animations: [self, animation], 

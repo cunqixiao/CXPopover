@@ -21,4 +21,5 @@ public protocol CXPopoverAnimationCoordinator: AnyObject {
 
     func update(context: UIViewControllerContextTransitioning, from fromVC: UIViewController, to toVC: UIViewController)
     
+    func cleanup(context: UIViewControllerContextTransitioning, from fromVC: UIViewController, to toVC: UIViewController)
 }

@@ -36,6 +36,9 @@ public struct CXPresentationBehavior {
     
     /// Defines the animation metadata (duration, option, bounces etc.) for the presentation.
     public var animationMetadata: CXAnimationMetadata
+    
+    /// Controls whether the interactive animation is enabled.
+    public var interactiveAnimationMode: InteractiveAnimationMode
 }
 
 // MARK: - Predefined behaviors
@@ -49,7 +52,8 @@ public extension CXPresentationBehavior {
         maskedCorners: [.layerMaxXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner],
         backgroundColor: .black.withAlphaComponent(0.5),
         isModal: false,
-        animationMetadata: .fade())
+        animationMetadata: .fade(),
+        interactiveAnimationMode: .none)
 }
 
 // MARK: - Anchor
@@ -65,5 +69,13 @@ public extension CXPresentationBehavior {
         case bottomLeading
         case bottomTrailing
         case center
+    }
+}
+
+// MARK: - Interactive Animation
+
+public extension CXPresentationBehavior {
+    enum InteractiveAnimationMode {
+        case none, dismissal, both
     }
 }

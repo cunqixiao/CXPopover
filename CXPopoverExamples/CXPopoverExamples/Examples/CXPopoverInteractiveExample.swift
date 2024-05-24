@@ -9,11 +9,21 @@ import UIKit
 
 import CXPopover
 
-class CXPopoverInteractiveExample: CXPopoverExample {
-    override func didTapMenuButton() {
+final class CXPopoverInteractiveExample: CXPopoverExample {
+    
+    // MARK: - Private properties
+    
+    private lazy var popover: CXPopoverController = {
         let content = PopoverContent()
-        let popover = CXPopoverController(content: content, presentationBehavior: content.behavior)
-        present(popover, animated: true)
+        return CXPopoverController(content: content, presentationBehavior: content.behavior)
+    }()
+    
+    // MARK: - Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        popover.interactiveCoordinator.preparePresentingTransition(self)
     }
 }
 
@@ -22,17 +32,18 @@ class CXPopoverInteractiveExample: CXPopoverExample {
 extension CXPopoverInteractiveExample {
     class PopoverContent: UIViewController, CXPopoverLayoutProvider {
         let behavior: CXPresentationBehavior = {
-            var metadata = CXAnimationMetadata.slide(moveIn: .top, moveOut: .top)
+            var metadata = CXAnimationMetadata.slide(moveIn: .right, moveOut: .right)
             metadata.isInteractiveAnimationDisabled = false
             
             var behavior = CXPresentationBehavior.default
-            behavior.anchor = .top
+            behavior.anchor = .trailing
             behavior.animationMetadata = metadata
+            behavior.interactiveAnimationMode = .both
             return behavior
         }()
         
         func popover(sizeForPopover containerSize: CGSize, safeAreaInsets: UIEdgeInsets) -> CGSize {
-            CGSize(width: containerSize.width, height: 300)
+            CGSize(width: 300, height: containerSize.height)
         }
     }
 }

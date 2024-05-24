@@ -13,13 +13,13 @@ public class CXPopoverController: UIViewController {
     
     // MARK: - Public properties
     
+    public let interactiveCoordinator: CXPopoverInteractiveCoordinator
     public let presentationBehavior: CXPresentationBehavior
     public let content: PopoverContent?
     
     // MARK: - Private properties
     
     private lazy var layoutProvider = DefaultLayoutProvider()
-    private var interactiveDismissal: CXInteractiveDismissalAnimation?
     
     // MARK: - Initializers
     
@@ -30,10 +30,13 @@ public class CXPopoverController: UIViewController {
     public init(content: PopoverContent?, presentationBehavior: CXPresentationBehavior = .default) {
         self.content = content
         self.presentationBehavior = presentationBehavior
+        self.interactiveCoordinator = CXPopoverInteractiveCoordinator(behavior: presentationBehavior)
+        
         super.init(nibName: nil, bundle: nil)
+        
         self.modalPresentationStyle = .custom
         self.transitioningDelegate = self
-        self.interactiveDismissal = CXInteractiveDismissalAnimation(viewController: self, behavior: presentationBehavior)
+        self.interactiveCoordinator.popoverController = self
     }
     
     required init?(coder: NSCoder) {
@@ -46,6 +49,8 @@ public class CXPopoverController: UIViewController {
         super.viewDidLoad()
         setupContentIfNeeded()
         stylize()
+        
+        interactiveCoordinator.prepareDismissalTransition()
     }
     
     // MARK: - Private methods
@@ -95,7 +100,17 @@ extension CXPopoverController: UIViewControllerTransitioningDelegate {
     }
     
     public func interactionControllerForDismissal(using animator: any UIViewControllerAnimatedTransitioning) -> (any UIViewControllerInteractiveTransitioning)? {
-        let isInteracting = interactiveDismissal?.isInteracting ?? false
-        return isInteracting ? interactiveDismissal : nil
+        interactiveCoordinator.interactiveAnimatorForDismissal()
+    }
+    
+    public func interactionControllerForPresentation(using animator: any UIViewControllerAnimatedTransitioning) -> (any UIViewControllerInteractiveTransitioning)? {
+        interactiveCoordinator.interactiveAnimatorForPresentation()
+    }
+}
+
+// MARK: - UIViewController extensions
+
+public extension UIViewController {
+    func prepareInteractivePopoverPresentation(of popover: CXPopoverController) {
     }
 }
