@@ -11,7 +11,7 @@ class CXPopoverHelper {
     
     // MARK: - Static internal methods
     
-    static func makeOrigin(containerSize: CGSize, contentSize: CGSize, insets: UIEdgeInsets, anchor: CXPresentationBehavior.Anchor) -> CGPoint {
+    static func makeOrigin(containerSize: CGSize, contentSize: CGSize, insets: UIEdgeInsets, anchor: CXPopoverBehavior.Anchor) -> CGPoint {
         let width = containerSize.width
         let height = containerSize.height
         
@@ -40,7 +40,7 @@ class CXPopoverHelper {
         }
     }
     
-    static func stylizePopover(_ view: UIView, behavior: CXPresentationBehavior) {
+    static func stylizePopover(_ view: UIView, behavior: CXPopoverBehavior) {
         view.layer.masksToBounds = true
         if behavior.cornerRadius > .zero {
             view.layer.cornerRadius = behavior.cornerRadius
@@ -48,7 +48,7 @@ class CXPopoverHelper {
         }
     }
     
-    private static func makeSmartMaskedCorners(anchor: CXPresentationBehavior.Anchor) -> CACornerMask {
+    private static func makeSmartMaskedCorners(anchor: CXPopoverBehavior.Anchor) -> CACornerMask {
         switch anchor {
         case .top:
             return [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]

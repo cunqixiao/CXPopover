@@ -27,7 +27,7 @@ final class CXPopoverPresentationController: UIPresentationController {
     
     // MARK: - Private properties
     
-    private let behavior: CXPresentationBehavior
+    private let behavior: CXPopoverBehavior
     private weak var layoutProvider: (any CXPopoverLayoutProvider)?
     
     private var coordinator: (any UIViewControllerTransitionCoordinator)? {
@@ -45,7 +45,7 @@ final class CXPopoverPresentationController: UIPresentationController {
     
     // MARK: - Initializer
     
-    init(presented: UIViewController, presenting: UIViewController?, behavior: CXPresentationBehavior, layoutProvider: any CXPopoverLayoutProvider) {
+    init(presented: UIViewController, presenting: UIViewController?, behavior: CXPopoverBehavior, layoutProvider: any CXPopoverLayoutProvider) {
         self.behavior = behavior
         self.layoutProvider = layoutProvider
         super.init(presentedViewController: presented, presenting: presenting)

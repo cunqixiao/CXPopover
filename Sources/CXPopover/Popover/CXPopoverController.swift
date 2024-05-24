@@ -14,7 +14,7 @@ public class CXPopoverController: UIViewController {
     // MARK: - Public properties
     
     public let interactiveCoordinator: CXPopoverInteractiveCoordinator
-    public let presentationBehavior: CXPresentationBehavior
+    public let presentationBehavior: CXPopoverBehavior
     public let content: PopoverContent?
     
     // MARK: - Private properties
@@ -23,11 +23,11 @@ public class CXPopoverController: UIViewController {
     
     // MARK: - Initializers
     
-    public convenience init(presentationBehavior: CXPresentationBehavior = .default) {
+    public convenience init(presentationBehavior: CXPopoverBehavior = .default) {
         self.init(content: nil, presentationBehavior: presentationBehavior)
     }
     
-    public init(content: PopoverContent?, presentationBehavior: CXPresentationBehavior = .default) {
+    public init(content: PopoverContent?, presentationBehavior: CXPopoverBehavior = .default) {
         self.content = content
         self.presentationBehavior = presentationBehavior
         self.interactiveCoordinator = CXPopoverInteractiveCoordinator(behavior: presentationBehavior)

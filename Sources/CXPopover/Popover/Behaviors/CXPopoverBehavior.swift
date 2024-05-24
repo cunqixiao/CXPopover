@@ -1,5 +1,5 @@
 //
-//  CXPresentationBehavior.swift
+//  CXPopoverBehavior.swift
 //  CXPopover
 //
 //  Created by Cunqi Xiao on 5/21/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-public struct CXPresentationBehavior {
+public struct CXPopoverBehavior {
     
     /// Controls whether the safe area should be ignored when
     /// calculating the origin of the presented view.
@@ -15,7 +15,7 @@ public struct CXPresentationBehavior {
     
     /// The anchor point of the presented view. for simple value, it will be centered,
     /// for example (`.leading` refers to the center left of the screen).
-    public var anchor: CXPresentationBehavior.Anchor
+    public var anchor: CXPopoverBehavior.Anchor
     
     /// Controls whether the smart corner should be enabled. when enabled,
     /// The `cornerRadius` will be applied to the presented view based on the `anchor`.
@@ -43,8 +43,8 @@ public struct CXPresentationBehavior {
 
 // MARK: - Predefined behaviors
 
-public extension CXPresentationBehavior {
-    static let `default` = CXPresentationBehavior(
+public extension CXPopoverBehavior {
+    static let `default` = CXPopoverBehavior(
         ignoreSafeArea: true,
         anchor: .center,
         enableSmartCorner: true,
@@ -58,7 +58,7 @@ public extension CXPresentationBehavior {
 
 // MARK: - Anchor
 
-public extension CXPresentationBehavior {
+public extension CXPopoverBehavior {
     enum Anchor: CaseIterable {
         case top
         case bottom
@@ -74,7 +74,7 @@ public extension CXPresentationBehavior {
 
 // MARK: - Interactive Animation
 
-public extension CXPresentationBehavior {
+public extension CXPopoverBehavior {
     enum InteractiveAnimationMode {
         case none, dismissal, both
     }

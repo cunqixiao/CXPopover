@@ -15,7 +15,7 @@ public class CXPopoverInteractiveCoordinator {
     
     // MARK: - Private properties
     
-    private let interactiveAnimationMode: CXPresentationBehavior.InteractiveAnimationMode
+    private let interactiveAnimationMode: CXPopoverBehavior.InteractiveAnimationMode
     private let isInteractiveAnimationEffect: Bool
     
     private var dismissalTransition: CXPopoverInteractiveTransition?
@@ -23,7 +23,7 @@ public class CXPopoverInteractiveCoordinator {
     
     // MARK: - Initializer
     
-    init(behavior: CXPresentationBehavior) {
+    init(behavior: CXPopoverBehavior) {
         self.interactiveAnimationMode = behavior.interactiveAnimationMode
         self.isInteractiveAnimationEffect = Self.isAnimationEffectSupportInteracting(effect: behavior.animationMetadata.effect)
     }

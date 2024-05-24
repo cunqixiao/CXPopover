@@ -31,11 +31,11 @@ final class CXPopoverInteractiveExample: CXPopoverExample {
 
 extension CXPopoverInteractiveExample {
     class PopoverContent: UIViewController, CXPopoverLayoutProvider {
-        let behavior: CXPresentationBehavior = {
+        let behavior: CXPopoverBehavior = {
             var metadata = CXAnimationMetadata.slide(moveIn: .right, moveOut: .right)
             metadata.isInteractiveAnimationDisabled = false
             
-            var behavior = CXPresentationBehavior.default
+            var behavior = CXPopoverBehavior.default
             behavior.anchor = .trailing
             behavior.animationMetadata = metadata
             behavior.interactiveAnimationMode = .both
