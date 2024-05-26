@@ -28,7 +28,10 @@ public struct CXPopoverBehavior {
     public var maskedCorners: CACornerMask
     
     /// The background color of the `backgroundMask` view.
-    public var backgroundColor: UIColor
+    public var backgroundMaskColor: UIColor
+    
+    /// The background color of the popover view.
+    public var popoverBackgroundColor: UIColor
 
     /// Controls whether the presentation is modal.
     /// if `true`, tap `backgroundMask` to dismiss is disabled.
@@ -50,7 +53,8 @@ public extension CXPopoverBehavior {
         enableSmartCorner: true,
         cornerRadius: 16.0,
         maskedCorners: [.layerMaxXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner],
-        backgroundColor: .black.withAlphaComponent(0.5),
+        backgroundMaskColor: .black.withAlphaComponent(0.5),
+        popoverBackgroundColor: .systemBackground,
         isModal: false,
         animationMetadata: .fade(),
         interactiveAnimationMode: .none)

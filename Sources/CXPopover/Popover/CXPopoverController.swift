@@ -93,7 +93,7 @@ public class CXPopoverController: UIViewController {
     }
     
     private func stylize() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = behavior.popoverBackgroundColor
         CXPopoverHelper.stylizePopover(view, behavior: behavior)
     }
 }

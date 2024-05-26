@@ -36,7 +36,7 @@ final class CXPopoverPresentationController: UIPresentationController {
     private lazy var backgroundMask: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = popoverBehavior.backgroundColor
+        view.backgroundColor = popoverBehavior.backgroundMaskColor
         view.alpha = 0
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapBackgroundMask)))
         return view
