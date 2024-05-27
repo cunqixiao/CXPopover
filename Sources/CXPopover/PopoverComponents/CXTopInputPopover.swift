@@ -1,5 +1,5 @@
 //
-//  CXTopTextViewPopover.swift
+//  CXTopInputPopover.swift
 //  CXPopover
 //
 //  Created by Cunqi Xiao on 5/25/24.
@@ -8,34 +8,38 @@
 import Combine
 import UIKit
 
-public class CXTopTextViewPopover: CXPopoverController {
+public class CXTopInputPopover: CXPopoverController {
+    public enum TextInputType {
+        case textField, textView
+    }
     
     // MARK: - Public properties
     
-    public var delegate: (any CXTopTextViewPopoverDelegate)? {
+    public var delegate: (any CXTopInputPopoverDelegate)? {
         get {
-            textViewPopover.delegate
+            textInput.delegate
         }
         set {
-            textViewPopover.delegate = newValue
+            textInput.delegate = newValue
         }
     }
     
     // MARK: - Private properties
     
-    private let textViewPopover: TextView
+    private let textInput: TextInputView
     
     // MARK: - Initializers
     
-    public init(title: String?, text: String?, actionButtonText: String? = nil,  behavior: CXPopoverBehavior = .default) {
-        self.textViewPopover = TextView(
+    public init(type textInputType: TextInputType, title: String?, text: String?, actionButtonText: String? = nil, behavior: CXPopoverBehavior = .default) {
+        self.textInput = TextInputView(
+            textInputType: textInputType,
             title: title,
             text: text,
             actionButtonText: actionButtonText,
             behavior: behavior)
-        let wrapper = PopoverContentViewWrapper(contentView: textViewPopover)
+        let wrapper = PopoverContentViewWrapper(contentView: textInput)
         
-        super.init(contentViewController: wrapper, behavior: textViewPopover.behavior)
+        super.init(contentViewController: wrapper, behavior: textInput.behavior)
     }
     
     public required init?(coder: NSCoder) {
@@ -43,22 +47,25 @@ public class CXTopTextViewPopover: CXPopoverController {
     }
 }
 
-extension CXTopTextViewPopover {
-    class TextView: UIView, CXPopoverContentViewRepresentable {
+extension CXTopInputPopover {
+    class TextInputView: UIView, CXPopoverContentViewRepresentable {
         
         // MARK: - Constants
         
         private static let insets = UIEdgeInsets(top: 8, left: 16, bottom: 16, right: 16)
         private static let containerInsets = UIEdgeInsets(top: 12, left: 8, bottom: 12, right: 8)
-        private static let textViewHeight: CGFloat = 300
+        private static let navigationBarHeight: CGFloat = 40
+        private static let textViewHeight: CGFloat = 240
+        private static let textFieldHeight: CGFloat = 48
         
         // MARK: - Internal properties
         
         let behavior: CXPopoverBehavior
-        weak var delegate: (any CXTopTextViewPopoverDelegate)?
+        weak var delegate: (any CXTopInputPopoverDelegate)?
 
         // MARK: - Private properties
         
+        private let textInputType: TextInputType
         private let title: String?
         private let actionButtonText: String?
         private let textSubject: CurrentValueSubject<String?, Never>
@@ -72,12 +79,30 @@ extension CXTopTextViewPopover {
             return textView
         }()
         
+        private lazy var textField: UITextField = {
+            let textField = UITextField()
+            textField.font = UIFont.preferredFont(forTextStyle: .body)
+            textField.textColor = .label
+            textField.borderStyle = .roundedRect
+            return textField
+        }()
+        
         private lazy var actionBarButtonItem = UIBarButtonItem()
         private lazy var navigationBar = UINavigationBar()
         
+        private var textInputView: UIView & UITextInput {
+            switch textInputType {
+            case .textField:
+                return textField
+            case .textView:
+                return textView
+            }
+        }
+        
         // MARK: - Initializers
         
-        init(title: String?, text: String?, actionButtonText: String?, behavior: CXPopoverBehavior) {
+        init(textInputType: TextInputType, title: String?, text: String?, actionButtonText: String?, behavior: CXPopoverBehavior) {
+            self.textInputType = textInputType
             self.title = title
             self.textSubject = CurrentValueSubject(text)
             self.actionButtonText = actionButtonText
@@ -92,7 +117,15 @@ extension CXTopTextViewPopover {
         // MARK: - Override methods
         
         func popover(sizeForPopover containerSize: CGSize, safeAreaInsets: UIEdgeInsets) -> CGSize {
-            CGSize(width: containerSize.width, height: Self.textViewHeight)
+            var contentHeight = safeAreaInsets.top + Self.navigationBarHeight + Self.insets.top + Self.insets.bottom
+            switch textInputType {
+            case .textField:
+                contentHeight += Self.textFieldHeight
+            case .textView:
+                contentHeight += Self.textViewHeight
+            }
+            
+            return CGSize(width: containerSize.width, height: contentHeight)
         }
         
         // MARK: - Lifecycle
@@ -101,24 +134,24 @@ extension CXTopTextViewPopover {
             setupViewsAndLayoutConstraints()
             setupNavigationBar()
             stylize()
-            delegate?.textViewPopover(didSetupTextView: textView, behavior: behavior)
-            delegate?.textViewPopover(didSetupNavigationBar: navigationBar, behavior: behavior)
+            setupTextInput()
+            delegate?.topInputPopover(didSetupNavigationBar: navigationBar, behavior: behavior)
             
-            subscribeToTextViewPublishers()
+            subscribeTextInputs()
         }
         
         func viewWillAppear() {
-            textView.becomeFirstResponder()
+            textInputView.becomeFirstResponder()
         }
         
         func viewWillDisappear() {
-            textView.resignFirstResponder()
+            textInputView.resignFirstResponder()
         }
         
         // MARK: - Private methods
         
         private func setupViewsAndLayoutConstraints() {
-            [navigationBar, textView].forEach {
+            [navigationBar, textInputView].forEach {
                 $0.translatesAutoresizingMaskIntoConstraints = false
                 addSubview($0)
             }
@@ -128,10 +161,10 @@ extension CXTopTextViewPopover {
                 navigationBar.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
                 navigationBar.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
                 
-                textView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: Self.insets.top),
-                textView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: Self.insets.left),
-                textView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -Self.insets.right),
-                textView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -Self.insets.bottom)
+                textInputView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: Self.insets.top),
+                textInputView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: Self.insets.left),
+                textInputView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -Self.insets.right),
+                textInputView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -Self.insets.bottom)
             ])
         }
         
@@ -139,12 +172,12 @@ extension CXTopTextViewPopover {
             let navigationItem = UINavigationItem(title: title ?? "")
             
             let leftBarButtonItem =
-            delegate?.textViewPopover(cancelBarButtonItemWith: behavior) ?? UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
+            delegate?.topInputPopover(cancelBarButtonItemWith: behavior) ?? UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
             leftBarButtonItem.target = self
             leftBarButtonItem.action = #selector(didTapCancel)
             navigationItem.leftBarButtonItem = leftBarButtonItem
             
-            actionBarButtonItem = delegate?.textViewPopover(actionBarButtonItemWith: behavior) ?? Self.makeActionBarButtonItem(actionButtonText)
+            actionBarButtonItem = delegate?.topInputPopover(actionBarButtonItemWith: behavior) ?? Self.makeActionBarButtonItem(actionButtonText)
             actionBarButtonItem.target = self
             actionBarButtonItem.action = #selector(didTapDone)
             navigationItem.rightBarButtonItem = actionBarButtonItem
@@ -155,21 +188,19 @@ extension CXTopTextViewPopover {
         
         private func stylize() {
             backgroundColor = behavior.popoverBackgroundColor
-            textView.backgroundColor = .secondarySystemBackground
+            textInputView.backgroundColor = .secondarySystemBackground
+            
+            // textField has `roundedRect` border style by default
             textView.layer.cornerRadius = behavior.cornerRadius
         }
         
-        private func subscribeToTextViewPublishers() {
-            textView.text = textSubject.value
-            
-            textView.textPublisher()
-                .assign(to: \.value, on: textSubject)
-                .store(in: &cancellables)
-            
-            textSubject
-                .map { !($0?.isEmpty ?? true) }
-                .assign(to: \.isEnabled, on: actionBarButtonItem)
-                .store(in: &cancellables)
+        private func setupTextInput() {
+            switch textInputType {
+            case .textField:
+                delegate?.topInputPopover(didSetupTextView: textView, behavior: behavior)
+            case .textView:
+                delegate?.topInputPopover(didSetupTextField: textField, behavior: behavior)
+            }
         }
         
         @objc private func didTapCancel() {
@@ -177,8 +208,36 @@ extension CXTopTextViewPopover {
         }
         
         @objc private func didTapDone() {
-            delegate?.textViewPopover(didFinishEditing: textSubject.value)
+            delegate?.topInputPopover(didFinishEditing: textSubject.value)
             parentPopover?.dismiss(animated: true)
+        }
+        
+        private func subscribeTextInputs() {
+            switch textInputType {
+            case .textField:
+                subscribeToTextField()
+            case .textView:
+                subscribeToTextView()
+            }
+            
+            textSubject
+                .map { !($0?.isEmpty ?? true) }
+                .assign(to: \.isEnabled, on: actionBarButtonItem)
+                .store(in: &cancellables)
+        }
+        
+        private func subscribeToTextView() {
+            textView.text = textSubject.value
+            textView.textPublisher()
+                .assign(to: \.value, on: textSubject)
+                .store(in: &cancellables)
+        }
+        
+        private func subscribeToTextField() {
+            textField.text = textSubject.value
+            textField.textPublisher()
+                .assign(to: \.value, on: textSubject)
+                .store(in: &cancellables)
         }
         
         private static func overridePopoverBehavior(behavior: CXPopoverBehavior) -> CXPopoverBehavior {
@@ -208,6 +267,16 @@ extension UITextView {
     func textPublisher() -> AnyPublisher<String?, Never> {
         NotificationCenter.default
             .publisher(for: UITextView.textDidChangeNotification, object: self)
+            .map { $0.object as? Self }
+            .map { $0?.text }
+            .eraseToAnyPublisher()
+    }
+}
+
+extension UITextField {
+    func textPublisher() -> AnyPublisher<String?, Never> {
+        NotificationCenter.default
+            .publisher(for: UITextField.textDidChangeNotification, object: self)
             .map { $0.object as? Self }
             .map { $0?.text }
             .eraseToAnyPublisher()

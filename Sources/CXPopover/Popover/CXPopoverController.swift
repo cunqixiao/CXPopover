@@ -67,7 +67,7 @@ public class CXPopoverController: UIViewController {
                 containerSize: size,
                 safeAreaInsets: safeAreaInsets,
                 anchor: behavior.anchor,
-                ignoreSafeArea: false,
+                ignoreSafeArea: behavior.ignoreSafeArea,
                 layoutProvider: contentViewController ?? layoutProvider)
         }
     }
