@@ -19,6 +19,7 @@
 		C424530F2BFF976500EB3B20 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C424530E2BFF976500EB3B20 /* SceneDelegate.swift */; };
 		C42453162BFF976600EB3B20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C42453152BFF976600EB3B20 /* Assets.xcassets */; };
 		C42453192BFF976600EB3B20 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = C42453182BFF976600EB3B20 /* Base */; };
+		C4A095DA2C0303F100DCCF20 /* CXPopoverTopTextViewExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A095D92C0303F100DCCF20 /* CXPopoverTopTextViewExample.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		C42453152BFF976600EB3B20 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C42453182BFF976600EB3B20 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C424531A2BFF976600EB3B20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C4A095D92C0303F100DCCF20 /* CXPopoverTopTextViewExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CXPopoverTopTextViewExample.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				C4204B422BFFA16000E26389 /* CXPopoverPlaygroundExample.swift */,
 				C4204B4A2C00271B00E26389 /* CXPopoverInteractiveExample.swift */,
 				C4204B4F2C01166100E26389 /* CXPopoverBasicContentViewExample.swift */,
+				C4A095D92C0303F100DCCF20 /* CXPopoverTopTextViewExample.swift */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 				C4204B4B2C00271B00E26389 /* CXPopoverInteractiveExample.swift in Sources */,
 				C4204B502C01166100E26389 /* CXPopoverBasicContentViewExample.swift in Sources */,
 				C424530D2BFF976500EB3B20 /* AppDelegate.swift in Sources */,
+				C4A095DA2C0303F100DCCF20 /* CXPopoverTopTextViewExample.swift in Sources */,
 				C4204B3F2BFF9F1F00E26389 /* CXPopoverBasicExample.swift in Sources */,
 				C424530F2BFF976500EB3B20 /* SceneDelegate.swift in Sources */,
 			);

@@ -27,7 +27,7 @@ public class CXPopoverController: UIViewController {
         self.init(contentViewController: nil, behavior: behavior)
     }
     
-    public convenience init(contentView: any CXPopoverContentViewRepresentable, behavior: CXPopoverBehavior = .default) {
+    public convenience init<ContentView: CXPopoverContentViewRepresentable>(contentView: ContentView, behavior: CXPopoverBehavior = .default) {
         self.init(contentViewController: PopoverContentViewWrapper(contentView: contentView), behavior: behavior)
     }
     
@@ -130,15 +130,15 @@ extension CXPopoverController: UIViewControllerTransitioningDelegate {
 // MARK: - PopoverContentViewWrapper
 
 extension CXPopoverController {
-    final class PopoverContentViewWrapper: UIViewController, CXPopoverContentViewControllerRepresentable {
+    final class PopoverContentViewWrapper<ContentView: CXPopoverContentViewRepresentable>: UIViewController, CXPopoverContentViewControllerRepresentable {
         
-        // MARK: - Private properties
+        // MARK: - Internal properties
         
-        private let contentView: any CXPopoverContentViewRepresentable
+        let contentView: ContentView
         
         // MARK: - Initializer
         
-        init(contentView: any CXPopoverContentViewRepresentable) {
+        init(contentView: ContentView) {
             self.contentView = contentView
             super.init(nibName: nil, bundle: nil)
         }
@@ -149,6 +149,21 @@ extension CXPopoverController {
         
         override func loadView() {
             self.view = contentView
+        }
+        
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            contentView.viewDidLoad()
+        }
+        
+        override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            contentView.viewWillAppear()
+        }
+        
+        override func viewWillDisappear(_ animated: Bool) {
+            super.viewWillDisappear(animated)
+            contentView.viewWillDisappear()
         }
         
         func popover(sizeForPopover containerSize: CGSize, safeAreaInsets: UIEdgeInsets) -> CGSize {

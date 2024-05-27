@@ -9,12 +9,24 @@ import UIKit
 
 public protocol CXPopoverContentViewRepresentable: UIView, CXPopoverLayoutProvider {
     func dismissPopover(animated: Bool)
+    
+    func viewDidLoad()
+    
+    func viewWillAppear()
+    
+    func viewWillDisappear()
 }
 
 public extension CXPopoverContentViewRepresentable {
     func dismissPopover(animated: Bool) {
         parentPopover?.dismiss(animated: animated)
     }
+    
+    func viewDidLoad() {}
+    
+    func viewWillAppear() {}
+    
+    func viewWillDisappear() {}
 }
 
 extension UIResponder {
