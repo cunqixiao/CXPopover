@@ -9,9 +9,7 @@ import UIKit
 
 public protocol CXTopInputPopoverDelegate: AnyObject {
     
-    func topInputPopover(didSetupTextView textView: UITextView, behavior: CXPopoverBehavior)
-    
-    func topInputPopover(didSetupTextField textField: UITextField, behavior: CXPopoverBehavior)
+    func topInputPopover(didSetupTextInput inputView: UIView & UITextInput, textInputType: CXTopInputPopover.TextInputType, behavior: CXPopoverBehavior)
     
     func topInputPopover(didSetupNavigationBar navigationBar: UINavigationBar, behavior: CXPopoverBehavior)
     
@@ -25,9 +23,9 @@ public protocol CXTopInputPopoverDelegate: AnyObject {
 // MARK: - Optional
 
 public extension CXTopInputPopoverDelegate {
-    func topInputPopover(didSetupTextView textView: UITextView, behavior: CXPopoverBehavior) {}
-    
-    func topInputPopover(didSetupTextField textField: UITextField, behavior: CXPopoverBehavior) {}
+    func topInputPopover(didSetupTextInput inputView: UIView & UITextInput,
+                         textInputType: CXTopInputPopover.TextInputType,
+                         behavior: CXPopoverBehavior) {}
     
     func topInputPopover(didSetupNavigationBar navigationBar: UINavigationBar, behavior: CXPopoverBehavior) {}
     

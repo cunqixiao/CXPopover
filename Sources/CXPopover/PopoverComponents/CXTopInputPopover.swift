@@ -134,7 +134,8 @@ extension CXTopInputPopover {
             setupViewsAndLayoutConstraints()
             setupNavigationBar()
             stylize()
-            setupTextInput()
+            
+            delegate?.topInputPopover(didSetupTextInput: textInputView, textInputType: textInputType, behavior: behavior)
             delegate?.topInputPopover(didSetupNavigationBar: navigationBar, behavior: behavior)
             
             subscribeTextInputs()
@@ -192,15 +193,6 @@ extension CXTopInputPopover {
             
             // textField has `roundedRect` border style by default
             textView.layer.cornerRadius = behavior.cornerRadius
-        }
-        
-        private func setupTextInput() {
-            switch textInputType {
-            case .textField:
-                delegate?.topInputPopover(didSetupTextView: textView, behavior: behavior)
-            case .textView:
-                delegate?.topInputPopover(didSetupTextField: textField, behavior: behavior)
-            }
         }
         
         @objc private func didTapCancel() {
