@@ -56,7 +56,7 @@ extension CXTopInputPopover {
         private static let containerInsets = UIEdgeInsets(top: 12, left: 8, bottom: 12, right: 8)
         private static let navigationBarHeight: CGFloat = 40
         private static let textViewHeight: CGFloat = 240
-        private static let textFieldHeight: CGFloat = 48
+        private static let textFieldHeight: CGFloat = 44
         
         // MARK: - Internal properties
         
