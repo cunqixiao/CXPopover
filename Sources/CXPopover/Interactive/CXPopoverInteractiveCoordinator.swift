@@ -183,7 +183,7 @@ extension CXPopoverInteractiveCoordinator {
             }
             
             let translation = gesture.translation(in: view)
-            let progress = makeProgress(translation, size: view.frame.size)
+            let progress = makeProgress(translation, size: Self.moveDistanceThreshold)
             
             switch gesture.state {
             case .began:

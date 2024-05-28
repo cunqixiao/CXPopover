@@ -12,7 +12,7 @@ class CXPopoverBaseInteractiveTransition: CXPopoverInteractiveTransition {
     // MARK: - Constants
     
     static let threshold = 0.5
-    
+    static let moveDistanceThreshold = CGSize(width: 200, height: 200)
     static let multiplier = 1.0
     
     // MARK: - Internal properties
