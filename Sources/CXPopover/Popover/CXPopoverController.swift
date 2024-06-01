@@ -59,12 +59,16 @@ public class CXPopoverController: UIViewController {
     
     public override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        coordinator.animate { [unowned self] _ in
+        coordinator.animate { [unowned self] context in
+            
+            // [Incorrect container size from `viewWillTransition`](https://forums.developer.apple.com/forums/thread/715726)
+            let containerSize = context.containerView.frame.size
+            
             // https://stackoverflow.com/a/46581783/24016318
             let safeAreaInsets = presentingViewController?.view.safeAreaInsets ?? .zero
             
             view.frame = CXPopoverHelper.makePopoverFrame(
-                containerSize: size,
+                containerSize: containerSize,
                 safeAreaInsets: safeAreaInsets,
                 anchor: behavior.anchor,
                 ignoreSafeArea: behavior.ignoreSafeArea,
