@@ -65,7 +65,7 @@ public class CXPopoverController: UIViewController {
             let containerSize = context.containerView.frame.size
             
             // https://stackoverflow.com/a/46581783/24016318
-            let safeAreaInsets = presentingViewController?.view.safeAreaInsets ?? .zero
+            let safeAreaInsets = context.containerView.safeAreaInsets
             
             view.frame = CXPopoverHelper.makePopoverFrame(
                 containerSize: containerSize,
